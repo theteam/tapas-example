@@ -28,7 +28,9 @@ The build process will produce a tar.gz file which should be viewed as a complet
 Build
 -----
 
-This example uses [Apache Ant](http://ant.apache.org/) as a build script.  Currently this build script does the following:
+Dependency:- [Apache Ant](http://ant.apache.org/)  
+
+Currently this build script does the following:
 
 * deletes a directory called 'build'
 * executes nDistro
