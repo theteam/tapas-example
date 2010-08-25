@@ -1,6 +1,6 @@
 <project name="tapas-example" default="default">
 	
-	<target name="default" depends="clean, setup"/>
+	<target name="default" depends="clean, setup, test"/>
 	
 	<target name="clean">
 		<echo message="cleaning directory build"/>
@@ -8,14 +8,37 @@
 	</target>
 	
 	<target name="setup">
+		<echo message="running ndistro"/>
+		<exec executable="ndistro" dir="." failonerror="true"/>
 		<echo message="creating build directory"/>
 		<mkdir dir="./build"/>
 		<copy todir="build">
 			<fileset dir=".">
 				<exclude name="build"/>
+				<exclude name="build.xml"/>
+				<exclude name=".ndistro"/>
+				<exclude name=".gitignore"/>
 			</fileset>
 		</copy>
-		<exec executable="ndistro" dir="build" failonerror="true"/>
+		<exec executable="chmod" dir="build/bin">
+			<arg value="+x"/>
+			<arg value="node"/>
+		</exec>
+	</target>
+	
+	<target name="test">
+		
+		<echo message="instrumenting code"/>
+		<exec executable="node-jscoverage" dir="build" failonerror="true">
+			<arg value="src"/>
+			<arg value="src-cov"/>
+		</exec>
+		
+		<echo message="running tests"/>
+		<exec executable="expresso" dir="build" failonerror="true">
+			<arg value="-I"/>
+			<arg value="src-cov"/>
+		</exec>
 	</target>
 		
 </project>
