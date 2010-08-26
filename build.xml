@@ -2,16 +2,23 @@
 	
 	<target name="default" depends="clean, setup, test"/>
 	
+	<target name="clean.deps">
+		<echo message="cleaning dependencies"/>
+		<delete dir="lib"/>
+		<delete dir="bin"/>
+		<delete dir="modules"/>
+	</target>
+	
 	<target name="clean">
 		<echo message="cleaning directory build"/>
-		<delete dir="./build"/>
+		<delete dir="build"/>
 	</target>
 	
 	<target name="setup">
 		<echo message="running ndistro"/>
 		<exec executable="ndistro" dir="." failonerror="true"/>
 		<echo message="creating build directory"/>
-		<mkdir dir="./build"/>
+		<mkdir dir="build"/>
 		<copy todir="build">
 			<fileset dir=".">
 				<exclude name="build"/>
