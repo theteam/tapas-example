@@ -1,7 +1,5 @@
 <project name="tapas-example" default="default">
 	
-	
-	
 	<target name="default" depends="clean, setup, test"/>
 	
 	<target name="clean">
