@@ -1,5 +1,7 @@
 <project name="tapas-example" default="default">
 	
+	<property name="app.name" value="tapas-example"/>
+	
 	<target name="default" depends="clean, setup, test"/>
 	
 	<target name="clean.deps">
@@ -12,6 +14,7 @@
 	<target name="clean">
 		<echo message="cleaning directory build"/>
 		<delete dir="build"/>
+		<delete dir="dist"/>
 	</target>
 	
 	<target name="setup">
@@ -47,6 +50,29 @@
 			<arg value="src-cov"/>
 			<env key="PATH" path="${env.path}:./bin"/>
 		</exec>
+	</target>
+	
+	<target name="dist" depends="clean">
+		<echo message="creating distribution"/>
+		<mkdir dir="dist"/>
+		<mkdir dir="dist/build"/>
+		<copy todir="dist/build">
+			<fileset dir=".">
+				<exclude name="build/**"/>
+				<exclude name="build.xml"/>
+				<exclude name=".ndistro"/>
+				<exclude name=".gitignore"/>
+				<exclude name="test/**"/>
+				<exclude name="dist/**"/>
+			</fileset>
+		</copy>
+		<exec executable="chmod" dir="dist/build/bin">
+			<arg value="+x"/>
+			<arg value="node"/>
+		</exec>
+		<tar destfile="dist/${app.name}.tar" basedir="dist/build"/>
+		<gzip destfile="dist/${app.name}.tgz" src="dist/${app.name}.tar"/>
+		<delete file="dist/${app.name}.tar"/>
 	</target>
 		
 </project>
