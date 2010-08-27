@@ -68,3 +68,8 @@ Testing
 Dependency:- [Expresso](http://github.com/visionmedia/expresso)
 
 The example has tests in the test folder and uses the server object to hit the API. It uses the instrumented code to gather code coverage and prints this out in the build.
+
+Distribution
+------------
+
+The Ant build script now also creates a folder called 'dist', copies all relevant code into dist/build and then creates a tar.gz file from that code.  This code can then be uploaded, or deployed as seen fit.  
