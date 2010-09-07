@@ -22,7 +22,6 @@ logger.info('ready...');
 
 // node dependencies
 var sys = require('sys');
-var fs = require('fs');
 
 // module dependencies
 // filesystem references are post correct after running ndistro
@@ -50,6 +49,22 @@ app.use(express.methodOverride());
 
 
 /****************************************************
+* Setup mongodb
+*****************************************************/
+
+var User = require('./models/user');
+
+// init user
+
+var u = new User();
+u.first = 'john';
+u.surname = 'johnson';
+u.age = 71;
+u.save(function(){
+	logger.info('user saved');
+});
+
+/****************************************************
 * Setup tapas
 *****************************************************/
 
@@ -67,5 +82,18 @@ tapas.example.version = 0.1;
 
 app.get('/', function(req, res){
 	logger.info('serving root');
+	res.send('OK');
+});
+
+app.get('/user/john', function(req, res){
+	logger.info('looking up user "john"');
+	User.find({first:'john'}).first(function(data){
+		logger.info('suit up: ' + data.first);
+	});
+	
+	User.findOldPeople().last(function(data){
+		logger.info('time for bed ' + data.full_name);
+	});
+	
 	res.send('OK');
 });
