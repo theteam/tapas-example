@@ -102,3 +102,16 @@ app.get('/user/:id', function(req, res){
 	});	
 	//TODO: error handling
 });
+
+
+app.get('/users', function(req, res){
+	logger.info('listiong all users...');
+	User.find({}).all(function(data){
+		logger.info('found ' + data.length + ' users in the system');
+		res.render('list_users.ejs', {
+			locals:{users:data}
+		});
+	});
+	//TODO: error handling
+});
+

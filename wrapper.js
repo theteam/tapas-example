@@ -21,8 +21,7 @@ logger.setLevel('INFO');
 * Setup server
 *****************************************************/
 
-var app = require('./src/app');
-var tapas = app.tapas;
+var tapas = require('./src/app').tapas;
 
 tapas.server.listen(tapas.port);
 logger.info('Tapas being served on port ' + tapas.port);
