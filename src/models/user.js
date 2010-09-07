@@ -3,7 +3,7 @@ var db = mongoose.connect('mongodb://localhost/tapasexample');
 
 mongoose.model('User', {
 
-    properties: ['first', 'surname', 'age', 'updated_at'],
+    properties: ['first', 'last', 'age', 'updated_at'],
 
     cast: {
       age: Number,
@@ -12,9 +12,15 @@ mongoose.model('User', {
 
     indexes: ['first'],
 
+    setters: {
+        first: function(v){
+            return v.toLowerCase();
+        }
+    },
+
     getters: {
         full_name: function(){ 
-            return this.first + ' ' + this.surname; 
+            return this.first + ' ' + this.last; 
         }
     },
 

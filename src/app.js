@@ -31,7 +31,7 @@ var ejs = require('../modules/ejs');
 // config
 var app = express.createServer();
 app.use(express.staticProvider(__dirname + '/public'));
-app.set('views', __dirname + '/views');
+app.set('views', __dirname + '/../views');
 app.set('view engine', 'ejs');
 
 // Here we use the bodyDecoder middleware
@@ -49,20 +49,10 @@ app.use(express.methodOverride());
 
 
 /****************************************************
-* Setup mongodb
+* Setup data model (mongodb)
 *****************************************************/
 
 var User = require('./models/user');
-
-// init user
-
-var u = new User();
-u.first = 'john';
-u.surname = 'johnson';
-u.age = 71;
-u.save(function(){
-	logger.info('user saved');
-});
 
 /****************************************************
 * Setup tapas
@@ -85,15 +75,30 @@ app.get('/', function(req, res){
 	res.send('OK');
 });
 
-app.get('/user/john', function(req, res){
-	logger.info('looking up user "john"');
-	User.find({first:'john'}).first(function(data){
+app.get('/user', function(req, res){
+	res.render('user_new.ejs');
+});
+
+app.post('/user', function(req, res){
+	var user = new User();
+	user.first = req.body.first;
+	user.last = req.body.last;
+	user.age = req.body.age;
+	user.save(function(){
+		logger.debug('user ' + user.full_name + ' saved');
+		res.redirect('/user/' + user.first);
+	});
+	//TODO: error handling
+});
+
+app.get('/user/:id', function(req, res){
+	logger.info('looking up user ' + req.params.id);
+	
+	User.find({first:req.params.id}).first(function(data){
 		logger.info('suit up: ' + data.first);
-	});
-	
-	User.findOldPeople().last(function(data){
-		logger.info('time for bed ' + data.full_name);
-	});
-	
-	res.send('OK');
+		res.render('user_show.ejs', {
+			locals:{user:data}
+		});
+	});	
+	//TODO: error handling
 });
