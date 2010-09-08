@@ -48,12 +48,6 @@ app.use(express.cookieDecoder());
 app.use(express.methodOverride());
 
 /****************************************************
-* Setup controllers
-*****************************************************/
-
-var user_controller = require('./controllers/user');
-
-/****************************************************
 * Setup tapas
 *****************************************************/
 
@@ -64,6 +58,13 @@ tapas.server = app;
 tapas.example = {};
 tapas.example.name = "Example App";
 tapas.example.version = 0.1;
+tapas.log = log4js;
+
+/****************************************************
+* Setup controllers
+*****************************************************/
+
+var user_controller = require('./controllers/user');
 
 /****************************************************
 * API Routes

@@ -2,18 +2,18 @@
 * Setup some logging using log4js
 *****************************************************/
 // bring in module, have to reference directly as not called 'index.js'
-var log4js = require('../../modules/log4js-node/lib/log4js');
+var log4js = module.parent.exports.tapas.log; //require('../../modules/log4js-node/lib/log4js');
 // create logging appenders
-log4js.addAppender(log4js.fileAppender('log/app.log'), 'tapas-example-controller-user');
+log4js.addAppender(log4js.fileAppender('log/app.log'), 'controller.user');
 // get specified log and set minimum logging level  
-var logger = log4js.getLogger('tapas-example-controller-user');
+var logger = log4js.getLogger('controller.user');
 logger.setLevel('INFO');
 // giddy up
 logger.info('user controller ready...');
 
 var User = require('../models/user');
 
-var tapas = tapas || {};
+var tapas = module.parent.exports.tapas;
 tapas.controller = tapas.controller || {};
 tapas.controller.user = tapas.controller.user || {};
 

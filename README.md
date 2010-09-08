@@ -85,3 +85,14 @@ Distribution
 ------------
 
 The Ant build script now also creates a folder called 'dist', copies all relevant code into dist/build and then creates a tar.gz file from that code.  This code can then be uploaded, or deployed as seen fit.  
+
+Code Organisation
+-----------------
+
+- wrapper.js - wraps the application and starts the web application
+- src/
+- src/app.js - bootstrap application
+- src/controllers
+- src/controllers/user.js - the user controller to handle expressjs requests
+- src/model/
+- src/model/user.js - the user model with mongodb connections
