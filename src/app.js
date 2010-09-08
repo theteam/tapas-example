@@ -47,12 +47,11 @@ app.use(express.cookieDecoder());
 // HTTP method to support app.put(), app.del() etc
 app.use(express.methodOverride());
 
-
 /****************************************************
-* Setup data model (mongodb)
+* Setup controllers
 *****************************************************/
 
-var User = require('./models/user');
+var user_controller = require('./controllers/user');
 
 /****************************************************
 * Setup tapas
@@ -75,43 +74,8 @@ app.get('/', function(req, res){
 	res.send('OK');
 });
 
-app.get('/user', function(req, res){
-	res.render('user_new.ejs');
-});
-
-app.post('/user', function(req, res){
-	var user = new User();
-	user.first = req.body.first;
-	user.last = req.body.last;
-	user.age = req.body.age;
-	user.save(function(){
-		logger.debug('user ' + user.full_name + ' saved');
-		res.redirect('/user/' + user.first);
-	});
-	//TODO: error handling
-});
-
-app.get('/user/:id', function(req, res){
-	logger.info('looking up user ' + req.params.id);
-	
-	User.find({first:req.params.id}).first(function(data){
-		logger.info('suit up: ' + data.first);
-		res.render('user_show.ejs', {
-			locals:{user:data}
-		});
-	});	
-	//TODO: error handling
-});
-
-
-app.get('/users', function(req, res){
-	logger.info('listiong all users...');
-	User.find({}).all(function(data){
-		logger.info('found ' + data.length + ' users in the system');
-		res.render('list_users.ejs', {
-			locals:{users:data}
-		});
-	});
-	//TODO: error handling
-});
+app.get('/user', user_controller.index);
+app.post('/user', user_controller.create);
+app.get('/user/:id', user_controller.get);
+app.get('/users', user_controller.list);
 
