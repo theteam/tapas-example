@@ -3,4 +3,15 @@ node 0.1.104
 	module senchalabs connect
     module visionmedia express
     module visionmedia ejs
-	module LearnBoost mongoose
+	module theteam tapas-models
+
+##########################
+# As ndistro is just a bash script
+# customise the installation of
+# dependencies below.
+##########################
+
+CWD=pwd	
+cd modules/tapas-models
+ndistro
+cd $cwd	

@@ -63,16 +63,12 @@ API routing is done through ExpressJS, a Sinatra like web server.  The example s
 
 * accepting a GET request on '/' and returning the body 'OK'
 
-Database
---------
+Data Models
+-----------
 
-Dependency:- [Mongoose](http://www.learnboost.com/mongoose/)
+Dependency:- [tapas-models](http://github.com/theteam/tapas-models)
 
-Data storage is through the document storage application, MongoDB.  The application uses Mongoose, a wrapper around [node-mongodb-native](http://github.com/christkv/node-mongodb-native) which provides a nice model abstraction from the database.
-
-Known Issues:- 
-
-Using ndistro for dependencies doesn't bring down Git submodules, which Mongoose uses.  This means a clean checkout won't work after running ndistro.  To get around this for now, download the latest [tarball](http://github.com/christkv/node-mongodb-native/downloads) and expand into modules/mongoose/lib/support/node-mongodb-native.
+The data models module contains database mapping and wrappers for common data entities. 
 
 Testing
 -------
@@ -94,5 +90,3 @@ Code Organisation
 - src/app.js - bootstrap application
 - src/controllers
 - src/controllers/user.js - the user controller to handle expressjs requests
-- src/model/
-- src/model/user.js - the user model with mongodb connections

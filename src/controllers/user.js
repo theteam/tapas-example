@@ -11,7 +11,7 @@ logger.setLevel('INFO');
 // giddy up
 logger.info('user controller ready...');
 
-var User = require('../models/user');
+var User = require('../../modules/tapas-models').User;
 
 var tapas = module.parent.exports.tapas;
 tapas.controller = tapas.controller || {};
